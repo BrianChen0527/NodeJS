@@ -35,11 +35,13 @@ const server =  http.createServer((req, res) => {
         
         // NodeJS parses all requests chunk by chunk
         // req.on() is an event listener and it allows us to listen to events occuring on our server
-        // A 'data' event is fired every time a new chunk is ready
+        // A 'data' event is fired every time a new chunk is ready (ASYNCHRONOUS)
         req.on('data', (chunk) => {
             console.log(chunk);
             body.push(chunk);
         });
+
+        // This second listener is also ASYNCHRONOUS, it only runs when your message has been parsed!
         req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             // Retrieve the second part of parsedBody, which is the user's entered message
@@ -47,7 +49,8 @@ const server =  http.createServer((req, res) => {
             console.log(parsedBody);
             console.log(message);        
 
-            // Write the user message into message.txt
+            // Write the user message into message.txt SYNCHRONOUSLY, 
+            // which means we can keep running the following lines of code without blocking our flow 
             fs.writeFileSync('message.txt', message);
         });
 
