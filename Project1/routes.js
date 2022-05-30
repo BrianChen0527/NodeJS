@@ -66,7 +66,7 @@ const reqHandler = (req, res) => {
     // You cannot use write() after end() !
 }
 
-// Export our reqProcessor() function for use in app.js
+// Export our reqHandler() function for use in app.js
 module.exports = {
     handler: reqHandler,
     // u can add other exports here:
